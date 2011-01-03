@@ -1,0 +1,35 @@
+:title: | Flash, a retrospective. Not really.
+:date: Tue Dec 30 23:30:00 -0500 2010
+:published: true
+:body: |
+
+  %p I'm job hunting at the moment, having just moved back to the states, and it's causing me to reconsider what I want to do to bring in those pennies and dimes. 
+
+  %p Actionscript has been my best buddy since I started toying around on the web, and it has carried me through a couple jobs and a freelance career. It's a great language and fantastic fun with which to play around.
+
+  %p But I have to admit, it's no use pretending anymore, I've made my fair share of banner ads. I've been given a timeline-coded mess hacked together and changed a couple numbers to make it work, rather than trying to find order in the chaos. I've made fullscreen Flash sites with hateful navigations and cumbersome transitions between screens. I've even done those ads that expand over the content when you accidentally mouse over them, yes those, I'm not proud. I've done it all.
+  
+  .box
+    %p 
+      :markdown
+        Hell, my last portfolio site was a fullscreen Flash site with preloader, custom scrollbars, and a physics demo that grabbed your CPU by the lapels and shook it. How did I dare put this online? It's so much _fun_!
+  .clearing-div
+  
+  %p But while Flash is fun for the developer, it's not necessarily fun for the user. 
+
+  %p Sites in HTML and well-written CSS are usually vastly more accessible, especially on mobile platforms. And even if your cellphone happens to support Flash.. any content worth seeing would quickly overcome it's ambitious but inevitably lacking CPU (for now).
+
+  %p So what's the verdict? 
+
+  %p It's all about the games. Most features that Flash once brought to the table have been more-or-less fulfilled by clever CSS or new HTML5 support, but if we all agreed to uninstall the Flash player tomorrow it would force us back into a gaming stone age, despite the canvas element. If not for reasons of performance, than merely browser support. The aforementioned global uninstallation would require almost 98% of users to take action, all of whom had previously, for example, been able to screw around with 3d environments provided by Papervision or Away3d. Compare that to the current adoption of WebGL?
+
+  %p So for me I'm not turning my back on Flash - even though I've replaced my old Flash portfolio and I'm not just hunting for Actionscript developer roles, it'll still have a presence online for years to come. It wasn't long ago that everyone was touting how the Flash game market was worth more than console games.
+
+  %p But despite all this, I couldn't help but sate my perverse desire to make a game on the canvas. And I'd do it again goddammit.
+  
+  .sunburst
+    %p
+      %span.Keyword Line
+      one
+    %p Line two
+  

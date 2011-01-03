@@ -41,6 +41,30 @@ li {
   font-size: 14px;
 }
 
+.article {
+  p {
+    margin-bottom: 24px;
+    
+    span.code {
+      
+      -moz-border-radius: 5px;
+      -webkit-border-radius: 5px;
+      -o-border-radius: 5px;
+      -ms-border-radius: 5px;
+      -khtml-border-radius: 5px;
+      border-radius: 5px;
+      
+      background-color: #000000;
+      color: #F8F8F8;
+      
+      font-size: 13px;
+      font-family: Monaco, monospace;
+      line-height: 17px;
+      padding: 4px;
+    }
+  }
+}
+
 .sunburst {
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
@@ -51,11 +75,11 @@ li {
   
   margin: 24px auto 24px;
   
-  p {
+  pre {
     font-size: 13px;
     font-family: Monaco, monospace;
-    color: white;
     line-height: 17px;
+    margin: 4px 0px 4px;
   }
 }
 
@@ -74,20 +98,12 @@ li {
   }
   
   a {
-    display: block;
     color: #ccc;
     text-decoration: none;
-    margin-left: 113px;
-    margin-top: -50px;
+    margin-left: 10px;
     font-style: italic;
     font-size: 14px;
-    
-    -webkit-transition: margin-top 0.2s ease-out;
   }
-}
-
-.header:hover a {
-  margin-top: -17px;
 }
 
 .title {
@@ -106,21 +122,12 @@ li {
 }
 
 .date {  
-  width: 120px;
+  width: 135px;
   height: 26px;
   
   margin-top: -23px;
   margin-left: auto;
   margin-right: auto;
-  
-  -webkit-transition: margin-top 0.2s ease-out;
-  -moz-transition: margin-top 0.2s ease-out;
-  -o-transition: margin-top 0.2s ease-out;
-  transition: margin-top 0.2s ease-out;
-}
-
-.title:hover .date {
-  margin-top: 0px;
 }
 
 .date-content {
@@ -144,14 +151,28 @@ li {
   }
 }
 
-.box {
+.box, .additional-content {
+  
   background-image: url('/images/top-left.gif'), url('/images/top-right.gif'), url('/images/bottom-left.gif'), url('/images/bottom-right.gif'), url('/images/left.gif'), url('/images/right.gif');
   background-repeat: no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat;
   background-position: top left, top right, bottom left, bottom right, left, right;
-  margin: 24px auto 24px;
-  padding: 1px 38px 1px;
+  
+  margin-bottom: 24px;
+  padding: 14px 38px 14px;
+  
+}
+
+.box {
   width: 400px;
   float: right;
+  
+  p {
+    margin: 0;
+  }
+}
+
+.additional-content {
+  text-align: center;
 }
 
 .clearing-div {

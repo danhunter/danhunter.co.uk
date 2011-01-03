@@ -1,0 +1,445 @@
+:title: | Let's canvas over CoffeeScript.
+:date: Mon Jan 03 01:48:00 -0500 2010
+:published: true
+:body: |
+  
+  %p
+    :markdown
+      Code abstraction is a lovely thing. Being superficial I appreciate the skin-deep benefits of syntax reduction. Being a programmer I appreciate the shorthand notation and additional features they provide. HAML, for example, is _just great_.
+
+  %p Coffeescript is a new-to-me-but-not-really-new-at-all JavaScript abstraction. It throws in trailing conditions and list comprehension, among other things. Plus it means I might not get RSI from typing 'prototype' over and over and over and over. 
+
+  %p A little while ago I was working on a javascript/canvas game. I thought it might be a good experiment to nab one of the more interesting methods from it and write the CoffeeScript equivalent - the one that checks the win case. I'll show you the game first.
+
+  .box
+    %p The objective of the game should be obvious with a few clicks, but just in case: the idea is to copy the rotating arrangement on the right (the guide circle) by adding pieces to the blank circle on the left (the player circle).
+  .clearing-div
+  
+  %p Click to add a piece. Press the space bar to restart the current level if you mess up. Have a go:
+
+  :plain
+    <div class="additional-content" id="canvas-wrapper">
+      <canvas id="game" width="590" height="400"></canvas>
+    </div>
+
+  %p Each circle is represented by an array of numbers, the length of the array is equal to the number of segments into which the circle is divided (which is proportional to the level the user is playing), and the values represent the number of pieces added to that segment.
+
+  %p Therefore if the two arrays contain the same numbers in the same order, the arrangements are the same, and the player wins. 
+
+  %p The nature of the game throws up one curveball though: the array representing the player's circle may start at any point in the sequence of numbers representing the rotating arrangement on the guide circle.
+
+  %p For example, if the guide arrangement is..
+
+  .sunburst
+    %pre [0, 1, 2, 0, 1];
+
+  %p and the player's arrangement is..
+
+  .sunburst
+    %pre [0, 1, 0, 1, 2];
+  
+  %p ..it is still correct.
+
+  %p My solution to this problem may not be the best way to solve it - but it works. Perhaps a brute-force solution would be easier to follow, one that checks every element of the player's arrangement to see if that element is the first of the guide arrangement, but I thought the increased array operations would be too expensive in comparison.
+
+  .sunburst
+    %pre
+      :preserve
+        function compare_arrays(_a, _b) {
+    
+          var a = _a.slice();
+          var b = _b.slice();
+    
+          var key = b[0];
+    
+          var occurrences = [];
+          var i;
+    
+          for(i = 0; i < a.length; i ++) {
+            if (a[i] === key) {
+              occurrences.push(i);
+            }
+          }
+    
+          for(i = 0; i < occurrences.length; i ++) {
+      
+            var wrap = a.splice(0, occurrences[i]);
+      
+            a = a.concat(wrap);
+      
+            if (a.join("") === b.join("")) {
+              return true;
+            }
+          }
+    
+          return false;
+        }
+
+  %p As you can hopefully see, I find all the occurrences of the first element of the correct solution, then wrap the player's arrangement around each occurrence of that value.
+  
+  %p The purpose of the first two lines is to create duplicates of the supplied arrays, otherwise the method would be destructive, as javascript passes pointers to the arrays when calling the function.
+
+  %p The CoffeeScript equivalent is as follows:
+
+  .sunburst
+    %pre
+      :preserve
+        compare_arrays = (_a, _b) ->
+
+         a = _a.slice()
+         b = _b.slice()
+
+         key = b[0]
+
+         occurrences = (_i for val in a when val == key)
+
+         wrap_leading_elements = (_key) ->
+          wrap = a[0.._key]
+          a = a[_key..-1].concat(wrap)
+          true if a.join("") == b.join("")
+
+         (return true if wrap_leading_elements(o)) for o in occurrences
+
+         false
+
+  %p It might be worth noting a little of my experience. 
+
+  %p I've always thought of significant whitespace to be an ill-defined delimitation that relies much too heavily on the configuration of your editor than the logic of your code. I can't say I had any problems with it here though. Perhaps using HAML trained an extra layer of awareness that kept my CoffeeScript untroubled. Either way, it seemed a perfectly natural way to write code.
+
+  %p 
+    :markdown
+      CoffeeScript is definitely a bit of a laugh to play with, I found it very similar to learning regular expressions. Some parts were a little hacky, especially using a variable that _will be generated_, rather than the value, to ensure the index of an element was returned. I could have used the only surviving low-level loop available, the while loop, but I was enjoying myself too much toying with the language.
+
+  %p I found myself often referring to the generated code to see the effects of the code I was writing though, as opposed to having a perfect idea of what it should be doing based on the CoffeeScript alone. This will be something that decreases over time, but in this instance it highlighted to me the vast changes generated by the smallest changes.
+
+  %p 
+    The parentheses around
+    %span.code (return true if wrap_leading_elements(o)) 
+    denote that each element of the loop should return true. Whereas were the parentheses are omitted the loop as a whole would return true. Obvious in hindsight, but only after checking against the generated js did I figure it out.
+
+  %p The following two lines
+    
+  .sunburst
+    %pre
+      :preserve
+        wrap = a[0.._key]
+        a = a[_key..-1].concat(wrap)
+  
+  %p ..are written in this manner due to CoffeeScript's slightly odd way of implementing the splice method. In the conventional JavaScript version I use splice to remove elements from an array, however with CoffeeScript you seem only able to replace elements of an array, not remove them. As such, I was required to slice twice to produce the same result.
+
+  %p It seems that where HAML documents are perfectly readable representations of HTML, easy enough for someone inexperienced with the syntax to understand, CoffeeScript turns a somewhat cryptic block of code into an ugly, bloated abomination.
+
+  %p An extremely compatible, JSLint valid, and very fast abomination though. I like it!
+    
+  :javascript
+    $(document).ready(function() {
+    
+      function Circle() {}
+      
+      Circle.prototype.init = function(_x, _y) {
+        this.x = _x;
+        this.y = _y;
+        this.radius = circle_radius;
+        this.level_height = level_height;
+        this.rotation = 0;
+      }
+
+      Circle.prototype.set_stacks = function(_array) {
+        this.stacks = _array;
+        this.arc_length = (Math.PI * 2) / this.stacks.length;
+      }
+      
+      Circle.prototype.edit_stacks = function(_index, _modifier) {
+        
+        console.log("before")
+        console.log(this.stacks[_index])
+        console.log(this.stacks.length)
+        
+        if (this.stacks[_index] + _modifier > max_stack_height) {
+          
+          this.stacks[_index] = max_stack_height;
+          
+        }else {
+         
+          this.stacks[_index] = this.stacks[_index] + _modifier;
+        }
+        
+        console.log(this.stacks[_index])
+        console.log("after")
+      }
+
+      Circle.prototype.draw = function() {
+        
+        if(this.stacks !== undefined) {
+          
+          ctx.beginPath();
+
+          var i;
+          var previous_arc = this.rotation;
+
+          for(i = 0; i < this.stacks.length; i ++) {
+            
+            ctx.arc(this.x, this.y, this.radius + (this.stacks[i] * this.level_height), previous_arc, previous_arc + this.arc_length, false);
+            previous_arc += this.arc_length; 
+          }
+        
+        }else {
+          
+          ctx.beginPath();
+          ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
+        }
+        
+        ctx.fill();
+      }
+
+      PlayerCircle.prototype = new Circle();
+      PlayerCircle.prototype.constructor = PlayerCircle;
+
+      function PlayerCircle() {}
+
+      GuideCircle.prototype = new Circle();
+      GuideCircle.prototype.constructor = GuideCircle;
+
+      function GuideCircle() {}
+      
+      GuideCircle.prototype.update = function() {
+        this.rotation -= 0.005;
+      }
+      
+      function Indicator() {
+        
+        this.angle = 0;
+        this.sector = 0;
+      }
+      
+      Indicator.prototype.update = function() {
+        
+        var two_pi = Math.PI * 2;
+        
+        this.angle += 0.005;
+        
+        if (this.angle >= two_pi) {
+          this.angle -= two_pi;
+        }
+        
+        this.sector = Math.floor((this.angle / two_pi) * (level + 1));
+      }
+      
+      Indicator.prototype.draw = function() {
+        
+        ctx.fillStyle = "rgba(0, 0, 0, 0.4)"
+        
+        ctx.beginPath();
+        
+        var offset = (player_circle.stacks[this.sector] * level_height) + circle_radius + level_height;
+        var length = (max_stack_height * level_height) + circle_radius + level_height + 14;
+        
+        ctx.moveTo(player_circle.x + Math.cos(this.angle) * offset, player_circle.y + Math.sin(this.angle) * offset);
+        ctx.lineTo(player_circle.x + Math.cos(this.angle) * length, player_circle.y + Math.sin(this.angle) * length);
+        
+        ctx.stroke();
+      }
+      
+      function zero_array(_length) {
+        var i = -1;
+        var a = [];
+        while(i++ < _length) {
+          a.push(0);
+        }
+        return a;
+      }
+      
+      function generate_guide(_length) {
+        
+        var i = -1;
+        var a = [];
+        while(i++ < _length) {
+          a.push(Math.round(Math.random() * max_stack_height));
+        }
+        return a;
+      }
+      
+      function update() {
+        
+        ctx.fillStyle = "#fffef7";
+        
+        ctx.fillRect(world_aabb.left, world_aabb.top, world_aabb.right, world_aabb.bottom);
+        
+        var i;
+        
+        var a;
+        var sector_range = (Math.PI * 2) / (level + 1);
+        
+        if(level > 1) {
+          
+          for(i = 0; i < level + 1; i += 2) {
+          
+            a = sector_range * i;
+          
+            ctx.fillStyle = "#eeede3";
+          
+            ctx.beginPath();
+            ctx.moveTo(player_circle.x, player_circle.y);
+            ctx.lineTo(player_circle.x + Math.cos(a) * 400, player_circle.y + Math.sin(a) * 400);
+          
+            a = sector_range * (i + 1);
+          
+            ctx.lineTo(player_circle.x + Math.cos(a) * 400, player_circle.y + Math.sin(a) * 400);
+          
+            ctx.fill();
+          }
+          
+        }else{
+          ctx.fillStyle = "#eeede3";
+          ctx.fillRect(world_aabb.left, world_aabb.top, world_aabb.width * .5, world_aabb.height * .5)
+        }
+        
+        ctx.fillStyle = "#222222";
+        ctx.fillRect(world_aabb.width * .5, world_aabb.top, world_aabb.right, world_aabb.bottom)
+        
+        guide_circle.update();
+        player_circle.draw();
+        
+        ctx.fillStyle = "#fffef7";
+        guide_circle.draw();
+        
+        ctx.lineWidth = 1.5;
+        
+        for(i = 0; i < level + 1; i ++) {
+          
+          a = sector_range * i;
+          a2 = sector_range * (i + 1);
+          
+          ctx.beginPath();
+          
+          if (i % 2) {
+            
+            ctx.strokeStyle = "#fffef7";
+          }else {
+            
+            ctx.strokeStyle = "#eeede3";
+          }
+                    
+          for(var j = 0; j < max_stack_height; j ++) {
+            
+            ctx.beginPath();
+            ctx.arc(player_circle.x, player_circle.y, player_circle.radius + j * player_circle.level_height, a, a2, false);
+            ctx.stroke();
+          }
+          
+        }
+        
+        ctx.strokeStyle = "#222222";
+        
+        for(i = 0; i < max_stack_height; i ++) {
+          ctx.beginPath();
+          ctx.arc(guide_circle.x, guide_circle.y, guide_circle.radius + i * guide_circle.level_height, 0, Math.PI * 2, false);
+          ctx.stroke();
+        }
+        
+        indicator.update();
+        indicator.draw();
+      }
+      
+      function click() {
+        player_circle.edit_stacks(indicator.sector, 1);
+        check_win();
+      }
+      
+      function key_pressed(_event) {
+        if(_event.which == '32') {
+          player_circle.set_stacks(zero_array(level));
+        }
+      }
+      
+      function compare_arrays(_a, _b) {
+        
+        var a = _a.slice();
+        var b = _b.slice();
+        
+        var key = b[0];
+        
+        var occurrences = [];
+        var i;
+        
+        for(i = 0; i < a.length; i ++) {
+          if (a[i] === key) {
+            occurrences.push(i);
+          }
+        }
+        
+        for(i = 0; i < occurrences.length; i ++) {
+          
+          var wrap = a.splice(0, occurrences[i]);
+          
+          a = a.concat(wrap);
+          
+          if (a.join("") === b.join("")) {
+            return true;
+          }
+        }
+        
+        return false;
+      }
+      
+      function check_win() {
+        if(compare_arrays(player_circle.stacks, guide_circle.stacks)) {
+          restart(level + 2);
+        }
+      }
+      
+      function restart(_level) {
+        
+        level = _level;
+        
+        player_circle.set_stacks(zero_array(level));
+        guide_circle.set_stacks(generate_guide(level));
+      }
+
+      var canvas = $('#game')[0];
+
+      if(canvas.getContext) {
+
+        var ctx = canvas.getContext('2d');
+        
+        var level = 1; 
+        var max_stack_height = 10; 
+        var circle_radius = 40;
+        var level_height = 9;
+
+        var mouse_x, mouse_y;
+
+        $('#canvas-wrapper').mousemove(function(e){
+            mouse_x = e.pageX - this.offsetLeft;
+            mouse_y = e.pageY - this.offsetTop;
+        });
+        
+        $('#canvas-wrapper').click(click);
+        
+        $(document).keyup(key_pressed);
+
+        var world_aabb = {left: 0, right: canvas.width, top: 0, bottom: canvas.height, width: canvas.width, height: canvas.height};
+        
+        var player_circle = new PlayerCircle();
+        var guide_circle = new GuideCircle();
+        
+        player_circle.init(world_aabb.width *.25, world_aabb.height * .5);
+        guide_circle.init(world_aabb.width *.75, world_aabb.height * .5);
+        
+        player_circle.set_stacks(zero_array(level));
+        guide_circle.set_stacks(generate_guide(level));
+        
+        ctx.strokeStyle = "#000000"
+        ctx.lineWidth = 2;
+        
+        player_circle.draw(ctx);
+        guide_circle.draw(ctx);
+        
+        var indicator = new Indicator();
+        
+        setInterval(update, 10);
+      }
+      
+    });
+    
+    

@@ -6,7 +6,8 @@
       .date-content
         %p= format_date(@article.created_at)
 
-= @article.body
+.article
+  = @article.body
 
 %ul.nextprev
   -unless @previous_article.nil?
