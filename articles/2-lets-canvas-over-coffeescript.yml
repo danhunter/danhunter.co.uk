@@ -400,7 +400,7 @@
 
       var canvas = $('#game')[0];
       
-      canvas.attr('tabindex', '0')
+      $(canvas).attr('tabindex', '0')
 
       if(canvas.getContext) {
 
