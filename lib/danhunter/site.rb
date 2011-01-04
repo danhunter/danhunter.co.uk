@@ -44,9 +44,8 @@ module DanHunter
       less :stylesheet
     end
     
-    get '/fonts/*.*' do
-      content_type 'application/octet-stream', :layout => false
-    end
+    mime_type :ttf, 'application/octet-stream'
+    mime_type :woff, 'application/octet-stream'
     
     # routes
     
