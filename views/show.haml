@@ -1,10 +1,10 @@
 .title
-  %h1= @article.title
+  %h1.tk-lobster= @article.title
 
   .date-wrapper
     .date
       .date-content
-        %p= format_date(@article.created_at)
+        %p.tk-lobster= format_date(@article.created_at)
 
 .article
   = @article.body
