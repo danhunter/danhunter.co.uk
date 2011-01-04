@@ -1,36 +1,36 @@
 !!! 5
 %html{ :lang => "en" }
-%head
-  %meta{ :charset => "utf-8" }
-  %link{ :rel => "stylesheet", :type => "text/css", :href => "/stylesheet.css" }
+  %head
+    %meta{ :charset => "utf-8" }
+    %link{ :rel => "stylesheet", :type => "text/css", :href => "/stylesheet.css" }
 
-  %script{ :type => "text/javascript", :src => "https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js" }
-  %script{ :type => "text/javascript", :src => "http://use.typekit.com/orz6vad.js" }
+    %script{ :type => "text/javascript", :src => "https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js" }
+    %script{ :type => "text/javascript", :src => "http://use.typekit.com/orz6vad.js" }
   
-  :javascript
-    try{Typekit.load();}catch(e){}
+    :javascript
+      try{Typekit.load();}catch(e){}
       
-  :javascript
-    $(document).ready(function(){
-      $(".date-content p").hide();
-      $(".title").hover(
-        function(){
-          $(".date").animate({"margin-top": "0px"}, 200);
-          $(".date-content p").show();
-        }, 
-        function(){
-          $(".date").animate({"margin-top": "-23px"}, 200, function() {
-            $(".date-content p").hide();
-          });
-        }
-      );
-    });
+    :javascript
+      $(document).ready(function(){
+        $(".date-content p").hide();
+        $(".title").hover(
+          function(){
+            $(".date").animate({"margin-top": "0px"}, 200);
+            $(".date-content p").show();
+          }, 
+          function(){
+            $(".date").animate({"margin-top": "-23px"}, 200, function() {
+              $(".date-content p").hide();
+            });
+          }
+        );
+      });
     
 
-%body
-  .header
+  %body
+    .header
+      .wrapper
+        %img{ :src => "/images/logo.gif", :alt => "Dan Hunter" }
+        %a{ :href => "mailto:dan@danhunter.co.uk" } dan@danhunter.co.uk
     .wrapper
-      %img{ :src => "/images/logo.gif", :alt => "Dan Hunter" }
-      %a{ :href => "mailto:dan@danhunter.co.uk" } dan@danhunter.co.uk
-  .wrapper
-    = yield
+      = yield

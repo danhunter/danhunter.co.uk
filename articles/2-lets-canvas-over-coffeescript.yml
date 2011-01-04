@@ -351,6 +351,7 @@
         if(_event.which == '32') {
           player_circle.set_stacks(zero_array(level));
         }
+        _event.preventDefault();
         return false;
       }
       
@@ -400,8 +401,6 @@
 
       var canvas = $('#game')[0];
       
-      $(canvas).attr('tabindex', '0')
-
       if(canvas.getContext) {
 
         var ctx = canvas.getContext('2d');
@@ -420,7 +419,11 @@
         
         $('#canvas-wrapper').click(click);
         
-        $(document).keyup(key_pressed);
+        $(document).keypress(key_pressed);
+        
+        $(document).bind("keydown keyup", function(event) { 
+          event.preventDefault();
+        });
 
         var world_aabb = {left: 0, right: canvas.width, top: 0, bottom: canvas.height, width: canvas.width, height: canvas.height};
         
