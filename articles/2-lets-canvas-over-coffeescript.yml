@@ -344,12 +344,14 @@
       function click() {
         player_circle.edit_stacks(indicator.sector, 1);
         check_win();
+        return false;
       }
       
       function key_pressed(_event) {
         if(_event.which == '32') {
           player_circle.set_stacks(zero_array(level));
         }
+        return false;
       }
       
       function compare_arrays(_a, _b) {
@@ -397,6 +399,8 @@
       }
 
       var canvas = $('#game')[0];
+      
+      canvas.attr('tabindex', '0')
 
       if(canvas.getContext) {
 

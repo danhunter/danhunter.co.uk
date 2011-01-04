@@ -44,20 +44,8 @@ module DanHunter
       less :stylesheet
     end
     
-    get '/fonts/*.ttf' do
-      content_type 'font/ttf', :layout => false
-    end
-
-    get '/fonts/*.otf' do
-      content_type 'font/otf', :layout => false
-    end
-
-    get '/fonts/*.eot' do
-      content_type 'application/vnd.ms-fontobject', :layout => false
-    end
-    
-    get '/fonts/*.woff' do
-      content_type 'application/x-woff', :layout => false
+    get '/fonts/*.*' do
+      content_type 'application/octet-stream', :layout => false
     end
     
     # routes
