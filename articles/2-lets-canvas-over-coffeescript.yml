@@ -341,7 +341,7 @@
         indicator.draw();
       }
       
-      function click() {
+      function click(_event) {
         player_circle.edit_stacks(indicator.sector, 1);
         check_win();
         return false;
@@ -350,8 +350,8 @@
       function key_pressed(_event) {
         if(_event.which == '32') {
           player_circle.set_stacks(zero_array(level));
+          _event.preventDefault();
         }
-        _event.preventDefault();
         return false;
       }
       
@@ -419,10 +419,12 @@
         
         $('#canvas-wrapper').click(click);
         
-        $(document).keypress(key_pressed);
+        $(document).keyup(key_pressed);
         
-        $(document).bind("keydown keyup", function(event) { 
-          event.preventDefault();
+        $(document).bind("keydown keypress", function(event) { 
+          if(event.which == '32') {
+            event.preventDefault();
+          }
         });
 
         var world_aabb = {left: 0, right: canvas.width, top: 0, bottom: canvas.height, width: canvas.width, height: canvas.height};

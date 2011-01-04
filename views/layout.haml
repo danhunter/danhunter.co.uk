@@ -15,7 +15,9 @@
         $(".date-content p").hide();
         $(".title").hover(
           function(){
-            $(".date").animate({"margin-top": "0px"}, 200);
+            $(".date").animate({"margin-top": "0px"}, 200, function() {
+              $(".date-content p").show(); // just in case
+            });
             $(".date-content p").show();
           }, 
           function(){
