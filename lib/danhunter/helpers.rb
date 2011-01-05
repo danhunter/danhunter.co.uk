@@ -1,6 +1,10 @@
 module DanHunter
   module Helpers
     
+    def h(text)
+      Rack::Utils.escape_html(text)
+    end
+    
     def ordinalize(number)
       
       number = number.to_i
@@ -27,9 +31,14 @@ module DanHunter
       return "#{day} #{month}"
     end
     
-    def link_to(url, text)
-      return "<a href='#{url}' title='#{text}'>#{text}</a>"
+    def link_to(text, link, title = nil)
+      title = "Go to #{text}" if title.nil?
+      "<a href ='#{link}' title='#{title}'>#{text}</a>"
     end
     
   end
+end
+
+module Haml::Helpers
+  include DanHunter::Helpers
 end

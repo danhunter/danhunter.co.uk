@@ -69,12 +69,6 @@ module DanHunter
         haml :not_found
       end
     end
-    
-    # helpers
-    
-    helpers do
-      include DanHunter::Helpers
-    end
   end
 end
 

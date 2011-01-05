@@ -13,11 +13,11 @@
   -unless @previous_article.nil?
     %li.prev
       &laquo;
-      = link_to @previous_article.permalink, @previous_article.title
+      = link_to @previous_article.title, @previous_article.permalink
     
   -unless @next_article.nil?
     %li.next
-      = link_to @next_article.permalink, @next_article.title
+      = link_to @next_article.title, @next_article.permalink
       &raquo;
       
 .clearing-div
