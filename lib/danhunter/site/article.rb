@@ -41,11 +41,11 @@ module DanHunter
         end
         
         def published
-          all.select {|article| article && article.published }.reverse
+          all.select {|article| article && article.published }
         end
         
         def drafts
-          all.select {|article| article && !article.published }.reverse
+          all.select {|article| article && !article.published }
         end
         
         def article_files
