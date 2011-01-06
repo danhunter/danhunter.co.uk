@@ -35,9 +35,8 @@ module DanHunter
         end
         
         def all
-          articles = article_files.map { |filename| Article.open(filename) }
-          articles.sort_by {|article| article.id}
-          articles
+          articles = article_files.map { |filename| Article.open(filename) }.sort_by { |article| article.id }
+          articles.reverse!
         end
         
         def published
@@ -61,7 +60,7 @@ module DanHunter
         def open(filename)
           article = false
 
-          name << ".yml" if !(name =~ /.yml/)
+          filename << ".yml" if !(filename =~ /.yml/)
 
           if File.exist?(filename)
             data = YAML.load_file(filename)
