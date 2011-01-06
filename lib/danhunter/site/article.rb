@@ -35,7 +35,9 @@ module DanHunter
         end
         
         def all
-          article_files.map { |filename| Article.open(filename) }
+          articles = article_files.map { |filename| Article.open(filename) }
+          articles.sort_by {|article| article.id}
+          articles
         end
         
         def published
