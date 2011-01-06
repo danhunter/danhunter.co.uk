@@ -76,7 +76,7 @@
 
   %p This error appeared in the Safari web inspector notifying me of Safari's inability to download the TTF version of the font. Usefully, it shrugs off this minor discretion and downloads the SVG instead, but it needed to be fixed in any case. 
 
-  %p The solution is to define the mime_type of the .ttf file format as one recognised by Safari. I initially used ol' faithful octet-stream and added the following to my Sinatra app:
+  %p The solution is to define the mime type of the .ttf file format as one recognised by Safari. I initially used ol' faithful octet-stream and added the following to my Sinatra app:
 
   .sunburst
     %pre
