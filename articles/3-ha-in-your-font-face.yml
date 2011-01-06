@@ -14,10 +14,10 @@
     = link_to "FontSquirrel", "http://fontsquirrel.com"
     so I went ahead and downloaded the pack.
 
-  %p I had just finished putting together the bare bones of the Sinatra app upon which this site operates, and still thirsted for something to further my exposure to Sinatra. So being an avid fan of Formula 1 I decided to build an app to tell me exactly how long until the next race, deciding that Heroku would do very nicely for the hosting.
+  %p I had just finished putting together the bare bones of the Sinatra app upon which this site operates, and still thirsted for something to further my exposure to Sinatra. Being an avid fan of Formula 1 I decided to build an app to tell me exactly how long until the next race, deciding that Heroku would do very nicely for the hosting.
 
   .box
-    %p My desperation for motorsport and my excessive free time neatly bundled into one URL.
+    %p My desperation for motorsport and my currently excessive free time neatly bundled into one URL.
   .clearing-div
   
   %p What I'd like to share is a couple of the pitfalls I unwittingly stumbled into during development, specifically using @font-face, lest another does the same.
@@ -103,6 +103,6 @@
   %p That's all for now.
   
   %p 
-    If you want, check out 
-    = link_to "the F1 app I keep mentioning.", "http://f12011.heroku.com" 
+    If you want, check out the 
+    = link_to "F1 app I keep mentioning.", "http://f12011.heroku.com" 
     Disclaimer: there's a pretty harsh FOUT that I haven't addressed yet.
