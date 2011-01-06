@@ -104,7 +104,9 @@
 
   %p It might be worth noting a little of my experience. 
 
-  %p I've always thought of significant whitespace to be an ill-defined delimitation that relies much too heavily on the configuration of your editor than the logic of your code. I can't say I had any problems with it here though. Perhaps using HAML trained an extra layer of awareness that kept my CoffeeScript untroubled. Either way, it seemed a perfectly natural way to write code.
+  %p I've always thought of significant whitespace to be an ill-defined delimitation that relies much too heavily on the formatting than the logic of your code. I can't say I had any problems with it here though. Perhaps using HAML trained an extra layer of awareness that kept my CoffeeScript untroubled. Either way, it seemed a perfectly natural way to write code.
+  
+  %p I've since come across opinions that state if a programmer can't be trusted to indent his code, how likely is it that the code will be reliable to start with? It seems like a valid point.
 
   %p 
     :markdown

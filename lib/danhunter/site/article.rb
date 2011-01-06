@@ -36,7 +36,15 @@ module DanHunter
         
         def all
           articles = article_files.map { |filename| Article.open(filename) }
+          puts ">>>"
+          articles.each do |article| 
+            puts article.title
+          end
           articles.sort_by {|article| article.id}
+          puts ">>>"
+          articles.each do |article| 
+            puts article.title
+          end
           articles
         end
         
