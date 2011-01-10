@@ -3,6 +3,7 @@ require 'sinatra/base'
 require 'less'
 require 'haml'
 require 'danhunter/helpers'
+require 'open-uri'
 
 module DanHunter
   class Site < Sinatra::Base
@@ -72,6 +73,11 @@ module DanHunter
     
     get '/portfolio' do
       haml :portfolio
+    end
+    
+    get '/resume' do
+      content_type 'application/pdf'
+      open('https://s3.amazonaws.com/danhunter.co.uk/danhunter-resume.pdf')
     end
   end
 end
