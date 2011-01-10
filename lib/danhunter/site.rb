@@ -69,6 +69,10 @@ module DanHunter
         haml :not_found
       end
     end
+    
+    get '/portfolio' do
+      haml :portfolio
+    end
   end
 end
 
