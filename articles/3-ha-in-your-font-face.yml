@@ -84,7 +84,7 @@
         mime_type :ttf, 'application/octet-stream'
         mime_type :woff, 'application/octet-stream'
 
-  %p Which worked, as hoped, but still fired a warning:
+  %p Which worked as hoped, but still fired a warning:
 
   .sunburst
     %pre
