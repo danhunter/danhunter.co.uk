@@ -104,5 +104,4 @@
   
   %p 
     If you want, check out the 
-    = link_to "F1 app I keep mentioning.", "http://f12011.heroku.com" 
-    Disclaimer: there's a pretty harsh FOUT that I haven't addressed yet.
+    = link_to "F1 app I keep mentioning.", "http://f12013.heroku.com" 
